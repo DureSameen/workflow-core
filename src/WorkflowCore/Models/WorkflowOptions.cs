@@ -3,6 +3,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using WorkflowCore.Interface;
 using WorkflowCore.Services;
+using WorkflowCore.Services.DefaultProviders;
 
 namespace WorkflowCore.Models
 {
@@ -13,6 +14,7 @@ namespace WorkflowCore.Models
         internal Func<IServiceProvider, IDistributedLockProvider> LockFactory;
         internal Func<IServiceProvider, ILifeCycleEventHub> EventHubFactory;
         internal Func<IServiceProvider, ISearchIndex> SearchIndexFactory;
+        internal Func<IServiceProvider, IDataStoreProvider> DataStoreFactory;
         internal TimeSpan PollInterval;
         internal TimeSpan IdleTime;
         internal TimeSpan ErrorRetryInterval;
@@ -32,6 +34,7 @@ namespace WorkflowCore.Models
             PersistanceFactory = new Func<IServiceProvider, IPersistenceProvider>(sp => new TransientMemoryPersistenceProvider(sp.GetService<ISingletonMemoryProvider>()));
             SearchIndexFactory = new Func<IServiceProvider, ISearchIndex>(sp => new NullSearchIndex());
             EventHubFactory = new Func<IServiceProvider, ILifeCycleEventHub>(sp => new SingleNodeEventHub(sp.GetService<ILoggerFactory>()));
+            DataStoreFactory = new Func<IServiceProvider, IDataStoreProvider>(sp => new DefaultStoreProvider());
         }
 
         public void UsePersistence(Func<IServiceProvider, IPersistenceProvider> factory)
@@ -57,6 +60,10 @@ namespace WorkflowCore.Models
         public void UseSearchIndex(Func<IServiceProvider, ISearchIndex> factory)
         {
             SearchIndexFactory = factory;
+        }
+        public void UseDataStore(Func<IServiceProvider, IDataStoreProvider> factory)
+        {
+            DataStoreFactory = factory;
         }
 
         public void UsePollInterval(TimeSpan interval)

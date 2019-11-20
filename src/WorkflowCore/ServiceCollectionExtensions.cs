@@ -9,7 +9,9 @@ using WorkflowCore.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ObjectPool;
 using WorkflowCore.Primitives;
+using WorkflowCore.Services.ApiServices;
 using WorkflowCore.Services.BackgroundTasks;
+using WorkflowCore.Services.DefaultDataStore;
 using WorkflowCore.Services.DefinitionStorage;
 using WorkflowCore.Services.ErrorHandlers;
 
@@ -33,9 +35,16 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddSingleton<IWorkflowRegistry, WorkflowRegistry>();
             services.AddSingleton<WorkflowOptions>(options);
-            services.AddSingleton<ILifeCycleEventPublisher, LifeCycleEventPublisher>();            
+            services.AddSingleton<ILifeCycleEventPublisher, LifeCycleEventPublisher>();
 
-            services.AddTransient<IBackgroundTask, WorkflowConsumer>();
+            services.AddSingleton<IDataStoreProvider>(options.DataStoreFactory);
+            services.AddSingleton<IDataStoreActivity, DataStoreActivity>();
+            services.AddSingleton<IDataStoreGlobalConfiguration, DataStoreGlobalConfiguration>();
+            services.AddSingleton<IDataStoreSecurityDefinition, DataStoreSecurityDefinition>();
+            services.AddSingleton<IAuthorizationService, AuthorizationService>();
+            services.AddSingleton<IApiService, ApiService>();
+            services.AddSingleton<IDataStore,DataStore>( );
+          
             services.AddTransient<IBackgroundTask, EventConsumer>();
             services.AddTransient<IBackgroundTask, IndexConsumer>();
             services.AddTransient<IBackgroundTask, RunnablePoller>();

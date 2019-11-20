@@ -1,0 +1,39 @@
+﻿{
+  "Activities": [
+
+    {
+      "Id": "UsersList",
+      "Path": "/api/user/",
+      "Scheme": "http",
+      "HttpMethod": "Get",
+      "AuthenticationOptionsScope": "user_read_only"
+    },
+    {
+      "Id": "GetById",
+      "Path": "/api/user/getbyid/{id}",
+      "Scheme": "http",
+      "HttpMethod": "Get",
+      "AuthenticationOptionsScope": "user_read_only"
+    }
+  ],
+
+
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:59714",
+    "securityDefinitions": {
+      "oauth2": {
+        "flow": "implicit",
+        "authorizationUrl": "https://sso.coofra.nl/connect/authorize",
+        "tokenUrl": "https://sso.coofra.nl/connect/token",
+        "scopes": { "read_only": "read_only" },
+        "type": "oauth2"
+      }
+    },
+    "security": [
+      {
+        "Bearer": [],
+        "oauth2": [ "cssReadApi" ]
+      }
+    ]
+  }
+}
