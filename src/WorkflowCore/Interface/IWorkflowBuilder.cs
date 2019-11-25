@@ -7,14 +7,9 @@ namespace WorkflowCore.Interface
 {
     public interface IWorkflowBuilder
     {
-        int LastStep { get; }                
-
+        int LastStep { get; }   
         IWorkflowBuilder<T> UseData<T>();
-
-        //WorkflowDefinition BuildBpmn(string xmlPath, string id, int version);
-
-        WorkflowDefinition Build(string id, int version);
-
+        WorkflowDefinition Build(string id, int version); 
         void AddStep(WorkflowStep step);
     }
 

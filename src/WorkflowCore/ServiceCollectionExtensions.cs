@@ -8,6 +8,7 @@ using WorkflowCore.Services;
 using WorkflowCore.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ObjectPool;
+using WorkflowCore.Models.Steps;
 using WorkflowCore.Primitives;
 using WorkflowCore.Services.ApiServices;
 using WorkflowCore.Services.BackgroundTasks;
@@ -44,7 +45,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IAuthorizationService, AuthorizationService>();
             services.AddSingleton<IApiService, ApiService>();
             services.AddSingleton<IDataStore,DataStore>( );
-          
+            services.AddTransient<IBackgroundTask, WorkflowConsumer>();
             services.AddTransient<IBackgroundTask, EventConsumer>();
             services.AddTransient<IBackgroundTask, IndexConsumer>();
             services.AddTransient<IBackgroundTask, RunnablePoller>();
@@ -70,7 +71,10 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddTransient<ISyncWorkflowRunner, SyncWorkflowRunner>();
             services.AddTransient<IDefinitionLoader, DefinitionLoader>();
-
+            services.AddTransient<StartTask>();
+            services.AddTransient<StopTask>();
+            services.AddTransient<UserTask>();
+            services.AddTransient<SendTask>();
             services.AddTransient<Foreach>();
 
             return services;

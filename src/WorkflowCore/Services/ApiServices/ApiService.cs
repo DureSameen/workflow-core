@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using IdentityModel.Client;
 using Newtonsoft.Json.Linq;
 using WorkflowCore.Interface;
 
@@ -20,20 +21,39 @@ namespace WorkflowCore.Services.ApiServices
 
         }
 
-        public async Task<dynamic> Get()
-        { 
-            var baseUrl = _dataStore.GlobalConfiguration.BaseUrl + _dataStore.Activities.FirstOrDefault(a => a.HttpMethod =="Get")?.Path ; 
-
-            using (HttpClient client = new HttpClient())
+        public async Task<dynamic> RunTask(string id)
+        {
+            try
             {
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_authorization.AccessToken}"  );
-                var response = await client.GetAsync(baseUrl);
-                response.EnsureSuccessStatusCode();
-                var result = response.Content.ReadAsStringAsync().Result;
-                return result;
+                var activity = _dataStore.Activities.FirstOrDefault(a => a.Id == id);
+                var baseUrl = _dataStore.GlobalConfiguration.BaseUrl + activity?.Path;
+
+
+                switch (activity?.HttpMethod)
+
+                {
+                    case "Get":
+                        using (HttpClient client = new HttpClient())
+                        {
+                            string accessToken = await _authorization.GetAccessToken(client,
+                                _dataStore.GlobalConfiguration.SecurityDefinitions.TokenUrl);
+                            client.SetBearerToken(accessToken);
+                            var response = await client.GetAsync(baseUrl);
+                            response.EnsureSuccessStatusCode();
+                            var result = response.Content.ReadAsStringAsync().Result;
+                            return result;
+                        }
+
+
+                }
+                return null;
+            }
+            catch (Exception exp)
+            {
+                return null;
             }
 
-             
         }
+
     }
 }

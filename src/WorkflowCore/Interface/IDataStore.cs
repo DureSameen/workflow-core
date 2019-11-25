@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WorkflowCore.Services.DefaultDataStore;
 
 namespace WorkflowCore.Interface
 {
    public interface IDataStore
     { 
-            IList<IDataStoreActivity> Activities { get; set; }
-            IDataStoreGlobalConfiguration GlobalConfiguration { get; set; }
+            IList<DataStoreActivity> Activities { get; set; }
+            DataStoreGlobalConfiguration GlobalConfiguration { get; set; }
     }
 }

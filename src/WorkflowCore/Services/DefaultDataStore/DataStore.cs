@@ -7,8 +7,18 @@ namespace WorkflowCore.Services.DefaultDataStore
 {
     public class DataStore: IDataStore
     {
-        public IList<IDataStoreActivity> Activities { get; set; }
-        public IDataStoreGlobalConfiguration GlobalConfiguration { get; set; }
-        
+        public DataStore(IDataStoreProvider dataStoreProvider)
+        {
+            Activities = dataStoreProvider.DataStore.Activities;
+            GlobalConfiguration = dataStoreProvider.DataStore.GlobalConfiguration;
+        }
+
+        public DataStore()
+        {
+        }
+
+        public IList<DataStoreActivity> Activities { get; set; }
+        public DataStoreGlobalConfiguration GlobalConfiguration { get; set; }
+         
     }
 }

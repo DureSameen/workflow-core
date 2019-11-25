@@ -21,19 +21,13 @@
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:59714",
     "securityDefinitions": {
-      "oauth2": {
-        "flow": "implicit",
-        "authorizationUrl": "https://sso.coofra.nl/connect/authorize",
-        "tokenUrl": "https://sso.coofra.nl/connect/token",
-        "scopes": { "read_only": "read_only" },
-        "type": "oauth2"
-      }
-    },
-    "security": [
-      {
-        "Bearer": [],
-        "oauth2": [ "cssReadApi" ]
-      }
-    ]
+
+      "flow": "implicit",
+      "authorizationUrl": "https://localhost:44387/connect/authorize",
+      "tokenUrl": "https://localhost:44387/connect/token",
+      "scopes": "read_only"
+
+
+    } 
   }
 }

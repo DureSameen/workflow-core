@@ -8,7 +8,8 @@ namespace WorkflowCore.Services.ApiServices
 {
     public interface IApiService
     {
-        Task<dynamic> Get();
- 
+          Task<dynamic> RunTask(string id);
+
+
     }
 }

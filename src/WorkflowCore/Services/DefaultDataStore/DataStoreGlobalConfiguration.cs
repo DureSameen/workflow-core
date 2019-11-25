@@ -8,6 +8,6 @@ namespace WorkflowCore.Services.DefaultDataStore
     public class DataStoreGlobalConfiguration: IDataStoreGlobalConfiguration
     {
         public string BaseUrl { get; set; }
-        public IDataStoreSecurityDefinition SecurityDefinitions { get; set; }
+        public  DataStoreSecurityDefinition SecurityDefinitions { get; set; }
     }
 }

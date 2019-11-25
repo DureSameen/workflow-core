@@ -8,6 +8,6 @@ namespace WorkflowCore.Services.DefaultDataStore
         public string AuthorizationUrl { get; set; }
         public string TokenUrl { get; set; }
         public string Scopes { get; set; }
-        public string Type { get; set; }
+       
     }
 }

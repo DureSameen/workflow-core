@@ -10,6 +10,7 @@ namespace WorkflowCore.Interface
         string AuthorizationUrl { get; set; }
         string TokenUrl { get; set; }
         string Scopes { get; set; }
-        string Type { get; set; }
+        
+
     }
 }
