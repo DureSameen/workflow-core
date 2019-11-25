@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
 using Workflow.DataStore.Json.Providers;
-using WorkflowCore.API.Steps;
 using WorkflowCore.Interface;
 using WorkflowCore.Models;
 using WorkflowCore.Services.DefinitionStorage;
@@ -65,11 +62,7 @@ namespace WorkflowCore.API
             //setup dependency injection
             IServiceCollection services = new ServiceCollection();
             services.AddLogging();
-            services.AddWorkflow(options=> options.UseDataStore(sp => new JsonDataStoreProvider("Activities.json")));
-            //services.AddWorkflow(x => x.UseMongoDB(@"mongodb://localhost:27017", "workflow"));
-            services.AddTransient<UsersListStep>();
-            services.AddTransient<GoodbyeWorld>();
-            
+            services.AddWorkflow(options=> options.UseDataStore(sp => new JsonDataStoreProvider("Activities.json"))); 
             var serviceProvider = services.BuildServiceProvider();
 
             //config logging

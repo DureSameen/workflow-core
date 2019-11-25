@@ -8,6 +8,7 @@ namespace WorkflowCore.Interface
    public interface IDataStore
     { 
             IList<DataStoreActivity> Activities { get; set; }
-            DataStoreGlobalConfiguration GlobalConfiguration { get; set; }
+            IList<ApiDetail> ApiDetails { get; set; }
+           DataStoreGlobalConfiguration GlobalConfiguration { get; set; }
     }
 }

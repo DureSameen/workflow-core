@@ -21,24 +21,28 @@ namespace WorkflowCore.Services.DefinitionStorage
                 var document = XDocument.Parse(source);
                 // select the process part of the xml, we are not interested in the diagram part
                 var elements = document.Root?.Elements().FirstOrDefault(e => e.Name.LocalName.Equals("process"))?.Descendants();
+                var userContextElement =
+                    document.Root?.Elements().FirstOrDefault(e => e.Name.LocalName.Equals("userContext"));
                 // loop through all the elements and if we encounter something we know, we parse it
                 if (elements != null)
                     foreach (var element in elements)
                     {
-                        var taskName = element.Attribute("name")?.Value ;
+                        var taskName = element.Attribute("name")?.Value;
+                        var userName= userContextElement?.Attribute("userName")?.Value;
+                        var password = userContextElement?.Attribute("password")?.Value;
                         switch (element.Name.LocalName)
                         {
                             case "startEvent":
-                                definition.Steps.Add(AddTask( typeof(StartTask)  , taskName));
+                                definition.Steps.Add(AddTask( typeof(StartTask)  , taskName, userName, password));
                                 break;
                             case "endEvent":
-                                definition.Steps.Add(AddTask(typeof(StopTask) , taskName));
+                                definition.Steps.Add(AddTask(typeof(StopTask) , taskName, userName, password));
                                 break;
                             case "userTask":
-                                definition.Steps.Add(AddTask(typeof(UserTask) , taskName));
+                                definition.Steps.Add(AddTask(typeof(UserTask) , taskName, userName, password));
                                 break;
                             case "sendTask":
-                                definition.Steps.Add(AddTask(typeof(SendTask) , taskName));
+                                definition.Steps.Add(AddTask(typeof(SendTask) , taskName, userName, password));
                                 break;
                         }
                     }
@@ -51,7 +55,7 @@ namespace WorkflowCore.Services.DefinitionStorage
             return definition;
         }
 
-        private StepSourceV1 AddTask(Type stepType, string name)
+        private StepSourceV1 AddTask(Type stepType, string name, string userName, string password)
         {
             var step = new StepSourceV1();
             
@@ -60,7 +64,8 @@ namespace WorkflowCore.Services.DefinitionStorage
             var baseName = (stepType.Namespace + "." + typeName).Substring(assemblyName.Length).Trim('.');
             step.StepType = assemblyName +"."+ baseName + ", " + assemblyName;
             step.Name = name;
-
+            step.UserName = userName;
+            step.Password = password;
             return step;
         }
     }

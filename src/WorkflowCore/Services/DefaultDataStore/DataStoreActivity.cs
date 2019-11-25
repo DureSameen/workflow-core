@@ -7,6 +7,7 @@ namespace WorkflowCore.Services.DefaultDataStore
 {
     public class DataStoreActivity: IDataStoreActivity
     {
+        public string ApiKey { get; set; }
         public string Id { get; set; }
         public string Path { get; set; }
         public string Scheme { get; set; }

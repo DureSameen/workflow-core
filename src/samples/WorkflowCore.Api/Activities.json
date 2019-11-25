@@ -6,18 +6,29 @@
       "Path": "/api/user/",
       "Scheme": "http",
       "HttpMethod": "Get",
-      "AuthenticationOptionsScope": "user_read_only"
+      "AuthenticationOptionsScope": "user_read_only",
+      "ApiKey":  "Gateway" 
     },
     {
       "Id": "GetById",
       "Path": "/api/user/getbyid/{id}",
       "Scheme": "http",
       "HttpMethod": "Get",
-      "AuthenticationOptionsScope": "user_read_only"
+      "AuthenticationOptionsScope": "user_read_only",
+      "ApiKey": "Gateway"
     }
   ],
 
+  "ApiDetails": [
+    {
+      "key": "Gateway", 
+      "clientId": "dev-gateway-api",
+      "scope": "ledger_read_only catalog_read_only user_read_only",
+      "clientSecret": "secret",
+      "baseUrl": "http://localhost:59714"
 
+    }
+  ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:59714",
     "securityDefinitions": {
@@ -28,6 +39,6 @@
       "scopes": "read_only"
 
 
-    } 
+    }
   }
 }

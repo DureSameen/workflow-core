@@ -21,7 +21,7 @@ namespace WorkflowCore.Models.Steps
 
         public override ExecutionResult Run(IStepExecutionContext context)
         {
-            _myService.RunTask (context.Step.Name);  
+            _myService.RunTask (context.Step.Name, context.Step.UserName, context.Step.Password);  
 
             _logger.LogInformation("StartTask!");
             return ExecutionResult.Outcome(0);

@@ -19,6 +19,11 @@ namespace WorkflowCore.Models.DefinitionStorage.v1
 
         public TimeSpan? RetryInterval { get; set; }
 
+        public  string UserName { get; set; }
+
+        public  string Password { get; set; }
+
+
         public List<List<StepSourceV1>> Do { get; set; } = new List<List<StepSourceV1>>();
 
         public List<StepSourceV1> CompensateWith { get; set; } = new List<StepSourceV1>();

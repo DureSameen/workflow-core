@@ -21,13 +21,14 @@ namespace WorkflowCore.Services.ApiServices
 
         }
 
-        public async Task<dynamic> RunTask(string id)
+        public async Task<dynamic> RunTask(string id,string username, string password)
         {
             try
             {
                 var activity = _dataStore.Activities.FirstOrDefault(a => a.Id == id);
-                var baseUrl = _dataStore.GlobalConfiguration.BaseUrl + activity?.Path;
-
+                var apiDetails = _dataStore.ApiDetails.FirstOrDefault(api => api.Key == activity?.ApiKey);
+                var baseUrl = apiDetails?.BaseUrl + activity?.Path;
+               
 
                 switch (activity?.HttpMethod)
 
@@ -36,7 +37,7 @@ namespace WorkflowCore.Services.ApiServices
                         using (HttpClient client = new HttpClient())
                         {
                             string accessToken = await _authorization.GetAccessToken(client,
-                                _dataStore.GlobalConfiguration.SecurityDefinitions.TokenUrl);
+                                _dataStore.GlobalConfiguration.SecurityDefinitions.TokenUrl, apiDetails,   username,   password);
                             client.SetBearerToken(accessToken);
                             var response = await client.GetAsync(baseUrl);
                             response.EnsureSuccessStatusCode();
