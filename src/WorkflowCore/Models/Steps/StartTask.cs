@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Logging;
 using WorkflowCore.Interface;
 using WorkflowCore.Services.ApiServices;
 
@@ -19,12 +15,12 @@ namespace WorkflowCore.Models.Steps
             _myService = myService;
         }
 
-        public override ExecutionResult Run(IStepExecutionContext context)
+        public override   ExecutionResult Run(IStepExecutionContext context)
         {
-            _myService.RunTask (context.Step.Name, context.Step.UserName, context.Step.Password);  
+            var list=_myService.RunTask(context.Step.Name, context.Step.AccessToken ).Result;  
 
             _logger.LogInformation("StartTask!");
-            return ExecutionResult.Outcome(0);
+            return ExecutionResult.Outcome(list);
         }
     }
 }

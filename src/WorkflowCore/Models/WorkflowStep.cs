@@ -38,9 +38,7 @@ namespace WorkflowCore.Models
 
         public bool ProceedOnCancel { get; set; } = false;
 
-        public virtual string UserName { get; set; }
-
-        public virtual string Password { get; set; }
+        public virtual string AccessToken { get; set; } 
 
         public virtual ExecutionPipelineDirective InitForExecution(WorkflowExecutorResult executorResult, WorkflowDefinition defintion, WorkflowInstance workflow, ExecutionPointer executionPointer)
         {

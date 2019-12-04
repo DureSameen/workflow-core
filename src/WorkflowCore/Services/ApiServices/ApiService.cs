@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using IdentityModel.Client;
+using System;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using IdentityModel.Client;
-using Newtonsoft.Json.Linq;
 using WorkflowCore.Interface;
 
 namespace WorkflowCore.Services.ApiServices
@@ -21,7 +18,7 @@ namespace WorkflowCore.Services.ApiServices
 
         }
 
-        public async Task<dynamic> RunTask(string id,string username, string password)
+        public async Task<dynamic> RunTask(string id,string accessToken)
         {
             try
             {
@@ -35,9 +32,7 @@ namespace WorkflowCore.Services.ApiServices
                 {
                     case "Get":
                         using (HttpClient client = new HttpClient())
-                        {
-                            string accessToken = await _authorization.GetAccessToken(client,
-                                _dataStore.GlobalConfiguration.SecurityDefinitions.TokenUrl, apiDetails,   username,   password);
+                        { 
                             client.SetBearerToken(accessToken);
                             var response = await client.GetAsync(baseUrl);
                             response.EnsureSuccessStatusCode();

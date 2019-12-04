@@ -28,21 +28,21 @@ namespace WorkflowCore.Services.DefinitionStorage
                     foreach (var element in elements)
                     {
                         var taskName = element.Attribute("name")?.Value;
-                        var userName= userContextElement?.Attribute("userName")?.Value;
-                        var password = userContextElement?.Attribute("password")?.Value;
+                        var accessToken= userContextElement?.Attribute("accessToken")?.Value;
+                       
                         switch (element.Name.LocalName)
                         {
                             case "startEvent":
-                                definition.Steps.Add(AddTask( typeof(StartTask)  , taskName, userName, password));
+                                definition.Steps.Add(AddTask( typeof(StartTask)  , taskName, accessToken));
                                 break;
                             case "endEvent":
-                                definition.Steps.Add(AddTask(typeof(StopTask) , taskName, userName, password));
+                                definition.Steps.Add(AddTask(typeof(StopTask) , taskName, accessToken));
                                 break;
                             case "userTask":
-                                definition.Steps.Add(AddTask(typeof(UserTask) , taskName, userName, password));
+                                definition.Steps.Add(AddTask(typeof(UserTask) , taskName,  accessToken));
                                 break;
                             case "sendTask":
-                                definition.Steps.Add(AddTask(typeof(SendTask) , taskName, userName, password));
+                                definition.Steps.Add(AddTask(typeof(SendTask) , taskName, accessToken));
                                 break;
                         }
                     }
@@ -55,7 +55,7 @@ namespace WorkflowCore.Services.DefinitionStorage
             return definition;
         }
 
-        private StepSourceV1 AddTask(Type stepType, string name, string userName, string password)
+        private StepSourceV1 AddTask(Type stepType, string name, string accessToken)
         {
             var step = new StepSourceV1();
             
@@ -64,8 +64,8 @@ namespace WorkflowCore.Services.DefinitionStorage
             var baseName = (stepType.Namespace + "." + typeName).Substring(assemblyName.Length).Trim('.');
             step.StepType = assemblyName +"."+ baseName + ", " + assemblyName;
             step.Name = name;
-            step.UserName = userName;
-            step.Password = password;
+            step.AccessToken = accessToken;
+            
             return step;
         }
     }

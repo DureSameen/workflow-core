@@ -9,7 +9,7 @@
       <incoming>SequenceFlow_0h21x7r</incoming>
     </exclusiveGateway>
   </process>
-   <userContext  userName="admin1" password="password"/>
+   <userContext accessToken="y_QASw1Mr6qIh_c5S-hWZX9dNLfNZC4dLA1x-QrJMA4"/>
   <bpmndi:BPMNDiagram id="BpmnDiagram_1">
     <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
       <bpmndi:BPMNShape id="StartEvent_1y45yut_di" bpmnElement="StartEvent_1y45yut">

@@ -87,8 +87,8 @@ namespace WorkflowCore.Services.DefinitionStorage
 
                 targetStep.Id = i;
                 targetStep.Name = nextStep.Name;
-                targetStep.UserName = nextStep.UserName;
-                targetStep.Password = nextStep.Password;
+                targetStep.AccessToken = nextStep.AccessToken;
+               
                 targetStep.ErrorBehavior = nextStep.ErrorBehavior;
                 targetStep.RetryInterval = nextStep.RetryInterval;
                 targetStep.ExternalId = $"{nextStep.Id}";

@@ -8,7 +8,7 @@ namespace WorkflowCore.Services.ApiServices
 {
     public interface IApiService
     {
-        Task<dynamic> RunTask(string id, string username, string password);
+        Task<dynamic> RunTask(string id, string accessToken);
 
 
     }
